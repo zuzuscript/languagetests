@@ -21,7 +21,7 @@ const { locked } := const_source;
 is( locked, "fixed", "const unpacking binds shorthand name" );
 ok(
 	exception( function () {
-		locked := "changed";
+		eval( "locked := \"changed\";" );
 	} ) instanceof Exception,
 	"const unpacking result is immutable",
 );
