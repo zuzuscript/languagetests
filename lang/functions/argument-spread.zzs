@@ -36,6 +36,8 @@ class Constructed {
 	let count with get;
 }
 
+let seen := [ ];
+
 function remember ( String label, value ) {
 	seen.push(label);
 	return value;
@@ -122,7 +124,6 @@ is(
 	"dynamic member call accepts PairList spread",
 );
 
-let seen := [ ];
 let evaluation_got := mixed(
 	remember( "a", "start" ),
 	...remember( "b", [ "array" ] ),
