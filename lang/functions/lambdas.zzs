@@ -19,11 +19,17 @@ let anon := function(x) {
 	return x + 1;
 }
 ;
+let plus_two := -> ^^ + 2;
+let triple := → ^^ * 3;
+let fallback := -> ^^ ? ^^: 41;
 is( plus_five(10), 15, "fn lambdas close over lexical scope" );
 is( labeler(7), "item:7", "typed fn shorthand lambdas execute" );
 is( thresholdLabeler( "Hi", 3 ), "HI", "typed fn shorthand supports parenthesized multi-params", );
 is( thresholdLabeler( "Hi", 12 ), "hi", "typed fn shorthand parenthesized multi-params branch", );
 is( anon(8), 9, "anonymous function expressions are callable" );
+is( plus_two(5), 7, "leading ASCII arrow lambdas bind ^^" );
+is( triple(4), 12, "leading Unicode arrow lambdas bind ^^" );
+is( fallback(), 41, "leading arrow lambdas make ^^ optional" );
 like( exception( function() {
 	labeler("bad");
 }

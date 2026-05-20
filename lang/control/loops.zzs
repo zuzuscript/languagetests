@@ -110,4 +110,62 @@ else {
 	exhausted_else := 1;
 }
 is( exhausted_else, 1, "for-else runs when iterator is immediately exhausted" );
+
+let implicit_total := 0;
+for ( [ 1, 2, 3 ] ) {
+	implicit_total += ^^;
+}
+is( implicit_total, 6, "bare for loops bind ^^ as the iteration value" );
+
+let implicit_iterator := [ ];
+let implicit_next := 3;
+function next_implicit () {
+	throw new ExhaustedException() if implicit_next == 0;
+	return implicit_next--;
+}
+for ( next_implicit ) {
+	implicit_iterator.push(^^);
+}
+is(
+	implicit_iterator,
+	[ 3, 2, 1 ],
+	"bare for loops work with function iterators",
+);
+
+let implicit_empty_else := 0;
+for ( [ ] ) {
+	implicit_empty_else := 99;
+}
+else {
+	implicit_empty_else := 1;
+}
+is( implicit_empty_else, 1, "bare for loops keep for-else behaviour" );
+
+let postfix_values := [ ];
+postfix_values.push(^^) for [ 1, 2, 3 ];
+is( postfix_values, [ 1, 2, 3 ], "postfix for binds ^^ in its statement" );
+
+let postfix_iterator := [ ];
+let postfix_next := 3;
+function next_postfix () {
+	throw new ExhaustedException() if postfix_next == 0;
+	return postfix_next--;
+}
+postfix_iterator.push(^^) for next_postfix;
+is(
+	postfix_iterator,
+	[ 3, 2, 1 ],
+	"postfix for works with function iterators",
+);
+
+let nested_here := [ ];
+for ( [ 10 ] ) {
+	nested_here.push( 1 |> ^^ + 1 );
+	nested_here.push(^^);
+}
+is(
+	nested_here,
+	[ 2, 10 ],
+	"chains nested in bare loops shadow only the inner ^^",
+);
 done_testing();
