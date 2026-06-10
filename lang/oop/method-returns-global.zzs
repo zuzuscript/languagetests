@@ -3,7 +3,7 @@ from test/more import *;
 // Regression test: a zero-parameter method whose entire body is a
 // bare-identifier return used to be short-circuited as a trivial field
 // getter, so returning a module-level global from a method yielded
-// Null. See docs/historic/bug-trivial-getter-shadows-globals.md.
+// Null (fixed in zuzu-rust, June 2026).
 
 const GLOBAL_DICT := { colour: "red" };
 const GLOBAL_STR := "hello";
