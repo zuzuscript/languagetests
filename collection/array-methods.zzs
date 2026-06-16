@@ -13,6 +13,23 @@ is( a.empty(), 0, "empty false" );
 is( [].is_empty(), 1, "is_empty true" );
 is( a.get( 0, 99 ), 0, "get existing" );
 is( a.get( 99, 42 ), 42, "get default" );
+is( [ "a", 2, true ].join(","), "a,2,true", "join stringable values" );
+is(
+	[ function () {}, function () {} ].join(",", "X"),
+	"X,X",
+	"join substitutes a string for unstringable values",
+);
+let join_replacements := 0;
+function join_replacement ( value ) {
+	join_replacements += 1;
+	return "F" _ join_replacements;
+}
+is(
+	[ function () {}, function () {} ].join(",", join_replacement),
+	"F1,F2",
+	"join calls a callback for unstringable values",
+);
+is( join_replacements, 2, "join callback is called once per unstringable value" );
 a.set( 0, 9 );
 is( a.get( 0, 0 ), 9, "set" );
 let mapped := a.map( fn x -> x * 2 );

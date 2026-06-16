@@ -12,6 +12,7 @@ is(
 	2,
 	"pairlist enumerate exposes pairs",
 );
+ok( pl.enumerate() instanceof Array, "pairlist enumerate returns Array" );
 is( pl.has("foo"), 1, "pairlist has duplicate key" );
 is( pl.exists("bar"), 1, "pairlist exists" );
 is( pl.defined("foo"), 1, "pairlist defined" );
