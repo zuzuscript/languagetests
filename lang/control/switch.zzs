@@ -21,7 +21,14 @@ switch (2) {
 	case 1: number_case := 10;
 	case 2: number_case := 20;
 }
+
+let default_case := 0;
+switch (3) {
+	case 1: default_case := 10;
+	default: default_case := ^^;
+}
 is( eq_match, true, "switch continue and ^^ work" );
 is( pattern, "xy", "switch :~ comparator supports regexp cases" );
 is( number_case, 20, "switch supports numeric case matching" );
+is( default_case, 3, "switch default case sees discriminant via ^^" );
 done_testing();
